@@ -1,0 +1,30 @@
+.card {
+    background-color: transparent;
+    color: var(--offwhite)
+}
+
+.card-header {
+    background-color: var(--ns-primary-50);
+    color: var(--offwhite)
+}
+
+.card-body {
+    background-color: var(--ns-bg-dark-50);
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.danger-Text {
+    color: var(--ns-warn)
+}
+
+.selectedPicture {
+    background-color: var(--ns-accent);
+}
+
+.mat-raised-button {
+    width: 180px !important;
+    height: 50px !important;
+}

@@ -1,0 +1,32 @@
+<div class="container" id="predictWithInput" *ngIf="predictor">
+    <h2 style="margin-top:20px ;color:whitesmoke;">
+        Unesi vrednosti za predikciju
+    </h2>
+    <div class="row" id="input">
+        <div class="col">
+            <div class="row" style="margin-left:5px; font-weight:bold; color:whitesmoke">
+                
+            </div>
+            <div class="row" *ngFor="let i of ['a','b','c','d','e','f']">
+                <div class="col">
+                    <!--
+                <mat-form-field> 
+                    <mat-label>{{i}}</mat-label>   
+                    <input matInput placeholder="Vrednost">
+                </mat-form-field>-->
+                </div>
+            </div>
+            
+        </div>
+        
+        
+    </div>
+
+    <div class="row  justify-content-between">
+        <button mat-raised-button style="max-width:30%;margin: 20px;">Predvidi rezultat</button>
+    </div>
+    <div class="row" id="output">
+        <b>Izlazna vrednost za kolonu "output":"input"</b>
+    </div>
+
+</div>

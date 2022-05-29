@@ -1,0 +1,13 @@
+<app-gradient-background colorHorizontal1="rgba(0, 8, 45, 0.5)" colorHorizontal2="rgba(0, 52, 89, 0.5)" colorVertical1="rgba(0, 52, 89, 0.5)" colorVertical2="rgba(0, 152, 189, 0.5)"></app-gradient-background>
+<app-reactive-background [speed]="0.0005" [scrollSpeed]="0.25" [minDistance]="0.1" [maxSize]="3" [cursorDistance]="0.17" lineColor="#00a8e8" pointColor="rgba(0, 188, 252, 0.33)" cursorLineColor="#00a8e8" [numPoints]="300">
+</app-reactive-background>
+<app-reactive-background [speed]="0.0008" [scrollSpeed]="0.5" [minDistance]="0.12" [maxSize]="4" [cursorDistance]="0.19" lineColor="#00a8e8" pointColor="rgba(0, 188, 252, 0.66)" cursorLineColor="#00a8e8" [numPoints]="200">
+</app-reactive-background>
+<app-reactive-background [speed]="0.001" [scrollSpeed]="1" [minDistance]="0.14" [maxSize]="5" [cursorDistance]="0.22" lineColor="#00a8e8" pointColor="rgba(0, 188, 252, 1)" cursorLineColor="#00a8e8" [numPoints]="100">
+</app-reactive-background>
+<app-navbar></app-navbar>
+<a class="bg-controls" style="z-index: 1000;" routerLink="playground">
+    <mat-icon color="primary">settings_suggest</mat-icon>
+</a>
+<router-outlet></router-outlet>
+<app-notifications></app-notifications>

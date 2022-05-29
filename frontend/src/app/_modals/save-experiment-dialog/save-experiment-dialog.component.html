@@ -1,0 +1,15 @@
+<h1 mat-dialog-title class="text-center">Sačuvaj eksperiment</h1>
+<div mat-dialog-content class="mt-5 mb-4 mx-1">
+    <form (keydown)="saveWithEnterKey($event)">
+        Naziv eksperimenta:<br>
+        <mat-form-field [style.width.px]=250>
+            <input type="text" matInput [(ngModel)]="selectedName" cdkFocusInitial [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <p *ngIf="wrongAlreadyExists" class="wrongInput">Izaberi drugi naziv za eskperiment.<br>Eskperiment sa unetim nazivom već postoji u kolekciji.</p>
+        <p *ngIf="wrongEmptyName" class="wrongInput">Unesite naziv eksperimenta.</p>
+    </form>
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button id="btnYes" mat-stroked-button color="basic" (click)="onYesClick()">Sačuvaj</button>
+    <button id="btnNo" mat-stroked-button (click)="onNoClick()">Odustani</button>
+</div>

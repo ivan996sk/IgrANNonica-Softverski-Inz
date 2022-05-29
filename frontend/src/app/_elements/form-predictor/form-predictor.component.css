@@ -1,0 +1,24 @@
+th{
+    margin-right: 5px;
+}
+.container{
+    background-color: var(--ns-bg-dark-50);
+    border-radius: 10px;
+    border: 1px solid var(--ns-primary);
+    width: 100%;
+    height: 100%;}
+#input{
+    color: whitesmoke;
+    background-color: var(--ns-bg-dark-100);
+    margin-top: 10px;
+}
+h3{
+    color: whitesmoke;
+}
+#output{
+    background-color: var(--ns-bg-dark-100);
+    color:whitesmoke;
+}
+#output b{
+    height: 50px;
+}

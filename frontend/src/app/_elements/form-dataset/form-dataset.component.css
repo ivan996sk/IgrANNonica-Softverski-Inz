@@ -1,0 +1,70 @@
+.folderBox {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.topBar {
+    display: table;
+    width: 100%;
+    height: 80px;
+    margin-left: 1.5%; 
+    margin-top: 1.5% ;
+}
+.kolona{
+    float: left;
+    margin-left: 20px;
+}
+.topBar label{
+    font-size: 30px;
+}
+.topBar mat-form-field{
+    width: 250px;
+    margin: 0;
+}
+
+.fileButton button{
+    height: 51px;
+    width: 250px;
+}
+
+.file-container {
+    border: 4px solid transparent;
+    position: relative;
+    margin-left: 3%;
+    width: 94%;
+    min-height: 400px;
+    height: 95%;
+}
+
+.dottedClass {
+    border: 4px dotted white;
+    border-radius: 25px;
+}
+
+.icon-display {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(4);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.file {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.file-container input{
+    border-radius: 5px;
+    left: 0%;
+}
+
+.naslov{
+    font-size: 30px;
+}

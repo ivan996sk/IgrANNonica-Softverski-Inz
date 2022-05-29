@@ -1,0 +1,49 @@
+<!-- Modal -->
+<div class="modal fade" id="modalForLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-alt text-offwhite">
+            <button #closeButton type="button" class="close-button btn-clear" data-bs-dismiss="modal" aria-label="Close" (click)="resetData()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <h1 class="login-heading mt-5 mb-5">Prijava</h1>
+            <form (keydown)="doLoginWithEnterKey($event)">
+                <!-- Korisnicko ime -->
+                <div class="mb-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Korisničko ime</mat-label>
+                        <input type="text" matInput [(ngModel)]="username" name="username" id="username" #usernameInput autofocus="true">
+                        <mat-icon matSuffix></mat-icon>
+                    </mat-form-field>
+                </div>
+                <!-- Lozinka -->
+                <div class="mb-4">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Lozinka</mat-label>
+                        <input type="password" matInput [(ngModel)]="password" name="password" id="pass" #pass>
+                        <ng-container matSuffix *ngIf="!passwordShown">
+                            <mat-icon (click)="togglePasswordShown()">visibility_off</mat-icon>
+                        </ng-container>
+                        <ng-container matSuffix *ngIf="passwordShown">
+                            <mat-icon (click)="togglePasswordShown()">visibility</mat-icon>
+                        </ng-container>
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div class="text-lg-start">
+                <p *ngIf="wrongCreds" class="small text-center" id="wrong-creds">Unesite ispravno korisničko ime i lozinku.</p>
+            </div>
+
+            <!--mat-raised-button-->
+            <div class="d-flex justify-content-center">
+                <button mat-raised-button id="loginButton" (click)="doLogin()">Prijavite se</button>
+                <button mat-stroked-button id="doNotloginButton" data-bs-dismiss="modal" (click)="resetData()">Odustanite</button>
+            </div>
+            <div class="modal-footer justify-content-center mt-5">
+                <p class="small mt-1">Nemate nalog?
+                    <a data-bs-toggle="modal" data-bs-target="#modalForRegister"><span id="link" (click)="cleanWarnings()">Registrujte se</span></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

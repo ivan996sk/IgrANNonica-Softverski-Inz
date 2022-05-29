@@ -1,0 +1,12 @@
+#btnYes {
+    background-color: var(--offwhite);
+    color: var(--ns-bg-dark-100);
+}
+
+#btnNo {
+    color: gray;
+}
+
+::ng-deep.mat-dialog-content {
+    overflow: visible;
+}

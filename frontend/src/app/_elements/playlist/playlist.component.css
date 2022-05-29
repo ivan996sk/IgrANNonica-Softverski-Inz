@@ -1,0 +1,61 @@
+.ns-wrapper {
+    width: 100%;
+    max-width: 800px;
+    max-height: 600px;
+    height: 100%;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ns-cards {
+    position: relative;
+    width: 300%;
+    height: 25rem;
+    margin-bottom: 20px;
+}
+
+.ns-card {
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
+
+.ns-card:hover {
+    opacity: 1 !important;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+#item-1:checked~.ns-cards #view-item-3,
+#item-2:checked~.ns-cards #view-item-1,
+#item-3:checked~.ns-cards #view-item-2 {
+    transform: translatex(-40%) scale(0.8);
+    opacity: 0.5;
+    z-index: 0;
+}
+
+#item-1:checked~.ns-cards #view-item-2,
+#item-2:checked~.ns-cards #view-item-3,
+#item-3:checked~.ns-cards #view-item-1 {
+    transform: translatex(40%) scale(0.8);
+    opacity: 0.5;
+    z-index: 0;
+}
+
+#item-1:checked~.ns-cards #view-item-1,
+#item-2:checked~.ns-cards #view-item-2,
+#item-3:checked~.ns-cards #view-item-3 {
+    transform: translatex(0) scale(1);
+    opacity: 1;
+    z-index: 1;
+}

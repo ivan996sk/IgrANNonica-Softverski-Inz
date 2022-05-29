@@ -1,0 +1,28 @@
+<div *ngIf="notifications && notifications.length > 0" class="position-fixed card card-body p-1 m-3" style="bottom: 0; right: 0; width: 18rem; z-index: 5000;">
+    <h2 class="m-auto" (click)="closed = !closed;" data-bs-toggle="collapse" href="#collapseNotifs" role="button" aria-expanded="true" aria-controls="collapseNotifs">
+        Notifikacije
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{notifications.length}}
+            <span class="visually-hidden">unread notifications</span>
+        </span>
+        <button class="border-0 bg-white">
+            <mat-icon class="position-absolute" style="top: 8px; right: 12px;">{{closed ? 'keyboard_arrow_up' :
+                'keyboard_arrow_down'}}</mat-icon>
+        </button>
+    </h2>
+
+    <div id="collapseNotifs" class="collapse show overflow-auto" style="max-height: 32rem;">
+        <div *ngFor="let notification of notifications" class="p-2 m-1 border rounded">
+            <div class="d-flex flex-row ">
+                <div>
+                    <p>{{notification.title}}</p>
+                    <div *ngIf="notification.hasProgress" class="border-3 border-primary bg-dark m-1" style="height: 5px; margin-top: -10px !important; min-width: 12rem;">
+                        <div class="bg-primary" style="height: 5px;" [style]="'width: '+(notification.progress*100)+'%;'">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close ms-auto align-self-center" aria-label="Close" (click)="removeNotification(notification);"></button>
+            </div>
+
+        </div>
+    </div>

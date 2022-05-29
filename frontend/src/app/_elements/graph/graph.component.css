@@ -1,0 +1,20 @@
+.node-text {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid red;*/
+    transform: translate(-50%, -50%);
+}
+
+.node-text:not(.inputs) {
+    color: transparent;
+}
+
+.node-text:not(.inputs):hover {
+    color: var(--offwhite);
+}

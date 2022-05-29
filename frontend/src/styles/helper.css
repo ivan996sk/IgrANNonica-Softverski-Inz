@@ -1,0 +1,152 @@
+@keyframes logo-animation {
+    from {
+        transform: perspective(100em) rotateX(50deg) rotateZ(0deg);
+    }
+    to {
+        transform: perspective(100em) rotateX(50deg) rotateZ(360deg);
+    }
+}
+
+.ann-logo {
+    animation-name: logo-animation;
+    animation-duration: 3140ms;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.bg-controls {
+    position: fixed;
+    bottom: 10px;
+    left: 5rem;
+}
+
+.center-horizontal {
+    margin-top: 50%;
+    margin-left: auto;
+    transform: translateX(-50%);
+}
+
+.footer-center {
+    position: relative;
+    height: 1rem;
+    text-align: center;
+}
+
+.row-height {
+    white-space: nowrap;
+    height: 1rem;
+}
+
+.icon-double>*:nth-child(2) {
+    margin-left: -1rem;
+}
+
+.no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-clear {
+    border: unset;
+    background-color: unset;
+    outline: unset;
+    position: relative;
+}
+
+.input-icon {
+    color: var(--offwhite);
+    transform: translateY(25%);
+}
+
+.input-icon:hover {
+    color: var(--ns-primary);
+}
+
+.f-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-toggle {
+    color: var(--offwhite);
+    height: 100%;
+}
+
+.icon-toggle>* {
+    margin-top: 5px;
+}
+
+.icon-toggle:active {
+    background-color: var(--ns-primary);
+}
+
+.icon-toggle-on {
+    background-color: var(--ns-primary);
+}
+
+.icon-toggle-on>* {
+    transform: scale(1.3);
+}
+
+.force-link {
+    color: var(--offwhite) !important;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.text-primary {
+    color: var(--ns-primary) !important;
+}
+
+.btn-icon {
+    color: var(--offwhite) !important;
+    background-color: var(--ns-primary);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    width: 28px;
+    height: 28px;
+}
+
+.bg-blur {
+    backdrop-filter: blur(2px);
+}
+
+.chart-wrapper {
+    width: 150px;
+    height: 150px;
+    padding-left: 2px;
+}
+
+.close-button {
+    background-color: none;
+    color: white;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--ns-bg) inset !important;
+    -webkit-text-fill-color: var(--ns-accent) !important;
+}
+
+a {
+    color: var(--ns-accent) !important;
+}
+
+.clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}

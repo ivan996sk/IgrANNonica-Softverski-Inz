@@ -1,0 +1,241 @@
+<div *ngIf="newModel">
+    <div id="container">
+        <div class="ns-row">
+
+            <div class="ns-col">
+                <mat-form-field class="example-full-width" appearance="fill" class="mat-fix">
+                    <mat-label>Naziv</mat-label>
+                    <input type="text" matInput [(ngModel)]="newModel.name" (valueChange)="editEvent.emit()">
+                </mat-form-field>
+            </div>
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Tip problema</mat-label>
+                    <mat-select [(ngModel)]="forProblemType" [disabled]="this.hideProblemType" (valueChange)="editEvent.emit(); newModel.type = forProblemType;">
+                        <mat-option *ngFor="let option of Object.keys(ProblemType); let optionName of Object.values(ProblemType)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="break-1"></div>
+
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Optimizacija</mat-label>
+                    <mat-select [(ngModel)]="newModel.optimizer" (valueChange)="editEvent.emit()">
+                        <mat-option *ngFor="let option of Object.keys(Optimizer); let optionName of Object.values(Optimizer)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </div>
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Funkcija troška</mat-label>
+                    <mat-select [(ngModel)]="lossFunction" (valueChange)="newModel.lossFunction = lossFunction!; editEvent.emit();">
+                        <mat-option *ngFor="let option of Object.keys(lossFunctions[forProblemType]); let optionName of Object.values(lossFunctions[forProblemType])" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="break-2"></div>
+
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Funkcija aktivacije izlaznog sloja</mat-label>
+                    <mat-select name="outputLayerActivationFunction" [(ngModel)]="outputLayerActivationFunction" (valueChange)="newModel.outputLayerActivationFunction = outputLayerActivationFunction!; editEvent.emit();">
+                        <mat-option *ngFor="let option of Object.keys(ActivationFunction); let optionName of Object.values(ActivationFunction)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Stopa učenja</mat-label>
+                    <mat-select [(ngModel)]="newModel.learningRate" (valueChange)="editEvent.emit()">
+                        <mat-option *ngFor="let option of Object.keys(LearningRate); let optionName of Object.values(LearningRate)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="break-1"></div>
+
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Broj epoha</mat-label>
+                    <input type="number" matInput [(ngModel)]="newModel.epochs" min="1" max="1000" (valueChange)="editEvent.emit()">
+                </mat-form-field>
+            </div>
+            <div class="ns-col">
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Broj uzoraka po iteraciji</mat-label>
+
+                    <mat-select matNativeControl [(value)]="newModel.batchSize" (valueChange)="editEvent.emit()">
+                        <mat-option *ngFor="let option of Object.keys(BatchSize); let optionName of Object.values(BatchSize)" [value]="option">{{option}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- GRAF -->
+
+    <div class="m-2">
+        <div class="row">
+            <div class="col-sm-3 rounded" style="border:1px solid var(--ns-primary);margin-top: 10px; width: fit-content;">
+                <!-- <label>Veličina skupa za validaciju: </label><b>{{validationSize}} %</b> 
+                    <div class="text-center pt-3 pb-0 mb-0"><b>{{testSetDistribution}}%</b> : <b>{{100-testSetDistribution}}%</b></div>
+                    <div class="text-center pt-0 mt-0 p-0">Trening ////slider////// Test</div>
+                -->
+                <div class="slider mt-2">
+                    <div>
+                        Trening {{testSetDistribution}}% : Test i validacija {{100-testSetDistribution}}%
+                    </div>
+                    <div class="slider-extended">
+                        <div class="slider-pad"></div>
+                        <mat-slider class="slide" min="10" max="90" step="5" [(ngModel)]="testSetDistribution" (input)="updateTestSet($event)" (valueChange)="editEvent.emit()"></mat-slider>
+                        <div class="slider-pad"></div>
+                    </div>
+                    <div>
+                        Test {{validationSize}}% : Validacija {{100-validationSize}}%
+                    </div>
+                    <div class="slider-extended">
+                        <div class="slider-pad"></div>
+                        <mat-slider class="slide" min="10" max="90" step="5" [(ngModel)]="validationSize" (input)="updateValidation($event)" (valueChange)="editEvent.emit()"></mat-slider>
+                        <div class="slider-pad"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-3">
+                    <mat-checkbox color="accent" (valueChange)="editEvent.emit()">Nasumični redosled podataka</mat-checkbox>
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <!-- {{forExperiment._columnsSelected}} -->
+                <app-graph [model]="newModel" [inputColumns]="getInputColumns()"></app-graph>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVI LAYERI -->
+
+    <div class="ns-row">
+
+        <div class="ns-col" id="layers-control">
+            <div>Broj Skrivenih Slojeva</div>
+            <button class="btn-clear btn-icon bubble" (click)="removeLayer()">
+                <mat-icon>remove</mat-icon>
+            </button>
+
+            <div>{{newModel.hiddenLayers}}</div>
+
+            <button class="btn-clear btn-icon bubble" (click)="addLayer()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <div class="break-1"></div>
+        <div class="ns-col">
+            <mat-form-field appearance="fill" class="mat-fix">
+                <mat-label>Aktivaciona funkcija svih slojeva</mat-label>
+
+                <mat-select [(ngModel)]="selectedActivation" (selectionChange)="changeAllActivation()">
+                    <mat-option *ngFor="let option of Object.keys(ActivationFunction); let optionName of Object.values(ActivationFunction)" [value]="option">
+                        {{ optionName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="ns-col">
+            <mat-form-field appearance="fill" class="mat-fix">
+                <mat-label>Broj neurona svih slojeva</mat-label>
+                <input matInput type="number" min="1" max="18" [(ngModel)]="selectedNumberOfNeurons" (change)="changeAllNumberOfNeurons()">
+            </mat-form-field>
+        </div>
+        <div class="break-2"></div>
+        <div class="ns-col">
+            <mat-form-field appearance="fill" class="mat-fix">
+                <mat-label>Regularizacija svih slojeva</mat-label>
+                <mat-select [(ngModel)]="selectedRegularisation" (selectionChange)="changeAllRegularisation()">
+                    <mat-option *ngFor="let option of Object.keys(Regularisation); let optionName of Object.values(Regularisation)" [value]="option">
+                        {{ optionName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="ns-col">
+            <mat-form-field appearance="fill" class="mat-fix">
+                <mat-label>Stopa regularizacije svih slojeva</mat-label>
+                <mat-select [(ngModel)]="selectedRegularisationRate" (selectionChange)="changeAllRegularisationRate()">
+                    <mat-option *ngFor="let option of Object.keys(RegularisationRate); let optionName of Object.values(RegularisationRate)" [value]="option">
+                        {{ optionName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- LAYERI -->
+
+        <div id="layers" style="margin-top: 10px;">
+            <div class="layer" *ngFor="let item of newModel.layers; let i=index">
+
+
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Aktivacija</mat-label>
+                    <button matPrefix class="btn-clear center-center text-offwhite">        
+                    <div>
+                        #{{i+1}}
+                    </div>
+                </button>
+                    <mat-select [(ngModel)]="newModel.layers[i].activationFunction">
+                        <mat-option *ngFor="let option of Object.keys(ActivationFunction); let optionName of Object.values(ActivationFunction)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="d-flex flex-row align-items-center justify-content-center tm">
+                    <div class="col-6" style="font-size: 13px;">Broj čvorova</div>
+                    <button class="btn-clear btn-icon bubble" (click)="removeNeuron(i)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <div class="col-2 text-center">{{newModel.layers[i].neurons}}</div>
+                    <button class="btn-clear btn-icon bubble" (click)="addNeuron(i)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Regularizacija</mat-label>
+                    <mat-select [(ngModel)]="newModel.layers[i].regularisation" (valueChange)="editEvent.emit()">
+                        <mat-option *ngFor="let option of Object.keys(Regularisation); let optionName of Object.values(Regularisation)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-fix">
+                    <mat-label>Stopa regularizacije</mat-label>
+                    <mat-select [(ngModel)]="newModel.layers[i].regularisationRate" (selectionChange)="editEvent.emit();">
+                        <mat-option *ngFor="let option of Object.keys(RegularisationRate); let optionName of Object.values(RegularisationRate)" [value]="option">
+                            {{ optionName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+.modal-content {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+#loginButton {
+    color: white;
+    background-color: #003459;
+    margin-right: 10px;
+}
+
+#loginButton,
+#doNotLoginButton {
+    padding: 2% 6%;
+}
+
+.close-button {
+    margin: 2%;
+}
+
+#link {
+    text-decoration: underline;
+}
+
+#link:hover {
+    color: var(--offwhite);
+    font-size: 110%;
+}
+
+#wrong-creds {
+    color: var(--ns-warn);
+}

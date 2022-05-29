@@ -1,0 +1,60 @@
+<div class="folderBox" *ngIf="dataset">
+    <div class="topBar">
+        <div class="kolona mb-3">
+            <div class="fileButton">
+                <button type="button" mat-raised-button (click)="fileInput.click()" [disabled]="dataset._id != ''" >
+                    <span *ngIf="!firstInput && dataset._id == '' ">Dodaj izvor podataka</span>
+                    <span *ngIf="firstInput && dataset._id == '' ">{{filename}}</span>
+                    <span *ngIf="dataset._id != '' ">Fajl je odabran</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="kolona">
+            <div role="group">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Naziv</mat-label>
+                    <input type="text" matInput value="{{dataset?.name}}" [(ngModel)]="dataset.name" (input)="editEvent.emit()">
+
+
+                    <mat-error *ngIf="nameFormControl.hasError('required')">
+                        Naziv je <strong>obavezan</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="kolona">
+            <mat-form-field appearance="fill">
+                <mat-label>Delimiter</mat-label>
+                <mat-select id="delimiterOptions" [(ngModel)]="dataset.delimiter" (selectionChange)="update(); editEvent.emit();" value=",">
+                    <mat-option *ngFor="let option of delimiterOptions" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-right: 0;">
+        <div class="file-container" [ngClass]="{'dottedClass': !tableData.hasInput}">
+
+            <i class="material-icons-outlined icon-display" [ngClass]="{'hidden': tableData.hasInput}">file_upload</i>
+
+
+            <input class="file" id="file-upload" [disabled]="dataset._id != ''" (change)="changeListener($event)" (valueChange)="dataset.isPreProcess = false; editEvent.emit()" #fileInput type="file" accept=".csv">
+
+            <div class="datatable">
+                <div [ngClass]="{'hidden': (!existingFlag)}" class="text-center">
+                    <button mat-button (click)="goBack()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                    <div style="display: inline;">{{(this.begin/10)+1}}...{{getPage()}}</div>
+                    <button mat-button (click)="goForward()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+                </div>
+                <app-datatable [tableData]="tableData"></app-datatable>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

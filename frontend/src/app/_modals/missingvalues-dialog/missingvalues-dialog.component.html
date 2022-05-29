@@ -1,0 +1,13 @@
+<h2 mat-dialog-title class="text-center">Nedostajuće vrednosti</h2>
+<div mat-dialog-content class="mt-5 mb-4">
+    <form (keydown)="withEnterKey($event)">
+        <mat-radio-group [(ngModel)]="selectedMissingValuesOption" [ngModelOptions]="{standalone: true}">
+            <mat-radio-button [value]="NullValueOptions.DeleteColumns" checked>Isključi sve kolone koje sadrže nedostajuće vrednosti</mat-radio-button>
+            <mat-radio-button [value]="NullValueOptions.DeleteRows" class="mt-1">Obriši sve redove koji sadrže nedostajuće vrednosti</mat-radio-button>
+        </mat-radio-group>
+    </form>
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button id="btnYes" mat-stroked-button color="basic" (click)="onYesClick()">Potvrdi</button>
+    <button id="btnNo" mat-stroked-button (click)="onNoClick()">Odustani</button>
+</div>

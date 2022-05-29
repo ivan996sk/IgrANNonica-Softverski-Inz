@@ -1,0 +1,24 @@
+<div #wrapper class="position-relative " style="width:100%;height:95%;">
+    <div class="ns-row" [ngClass]="{'hide':experiment.type != ProblemType.Regression}">
+        <div class="ns-col" >
+            <canvas id="myChartmae" #canvasmae>   
+            </canvas>
+        </div>
+        <div class="ns-col">
+            <canvas id="myChartmse" #canvasmse>   
+            </canvas>
+        </div>
+    </div>
+    <div class="ns-row"  [ngClass]="{'hide':experiment.type == ProblemType.Regression}">
+        <div class="ns-col" >
+            <canvas id="myChartloss" #canvasloss>   
+            </canvas>
+        </div>
+        <div class="ns-col" >
+            <canvas id="myChartacc" #canvasacc>   
+            </canvas>
+        </div>
+
+    </div>
+    
+</div>

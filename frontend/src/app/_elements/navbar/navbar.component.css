@@ -1,0 +1,8 @@
+.dropdown-item:hover {
+    background-color: var(--ns-primary);
+}
+
+h4 {
+    margin-top: 0.82rem;
+    margin-right: 10px;
+}

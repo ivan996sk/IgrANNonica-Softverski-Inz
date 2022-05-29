@@ -1,0 +1,268 @@
+<div *ngIf="loaded">
+    <div id="tabs">
+        <div class="folder-tab p-1 rounded-top" *ngFor="let tab of tabs; let i = index" [style]="'z-index:' + calcZIndex(i) + ' ;'" [ngClass]="{'selected-tab' : selectedTab.index == i, 'hover-tab' : hoveringOverTab?.index == i}">
+            <a class="m-1 stretched-link tab-link" (click)="selectTab(i)" (mouseenter)="hoverOverTab(i)" (mouseleave)="hoverOverTab(-1)">
+            {{tab.name}}
+        </a>
+        </div>
+        <!--
+    <button mat-button class="p-1 folder-tab-end rounded-top">
+        Kolone
+        <mat-icon>keyboard_double_arrow_down</mat-icon>
+    </button>
+    -->
+    </div>
+    <div id="folder-table" *ngIf="dataset && experiment">
+        <!--<div [ngSwitch]="tabToDisplay">-->
+        <div id="divTable">
+
+            <div [ngClass]="{'hidden': tabToDisplay != Table.Data}">
+                <table class="table text-offwhite fixed bg-blur">
+                    <colgroup>
+                        <col class="col-first">
+                        <col *ngFor="let column of dataset.columnInfo; let i = index" [ngClass]="{'col-disabled' : !experiment.inputColumns.includes(column.columnName)}">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="columnNames" *ngFor="let colInfo of dataset.columnInfo; let i = index" [ngClass]="{'header-disabled' : !columnsChecked[i]}">
+                                <div class="cell-align">
+                                    <div class="text-overflow">
+                                        #{{i + 1}}&nbsp;&nbsp;{{colInfo.columnName}}
+                                    </div>
+                                    <mat-checkbox color="primary" [(ngModel)]="columnsChecked[i]" (change)="changeInputColumns($event, colInfo.columnName)"></mat-checkbox>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of tableData; let i = index">
+                            <th>#{{((this.begin/10)+1)*10-10+i+1}}</th>
+                            <td *ngFor="let col of row; let j = index" [ngClass]="{'text-disabled' : !columnsChecked[j]}">
+                                <div class="text-overflow">
+                                    {{col}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    <button mat-button (click)="goBack()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                    <div style="display: inline;">{{(this.begin/10)+1}}...{{getPage()}}</div>
+                    <button mat-button (click)="goForward()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+
+                </div>
+            </div>
+
+            <div [ngClass]="{'hidden': tabToDisplay != Table.CorrelationMatrix}">
+                <table class="table text-offwhite fixed bg-blur">
+                    <colgroup>
+                        <col class="col-first">
+                        <col *ngFor="let column of dataset.columnInfo; let i = index" [ngClass]="{'col-disabled' : !experiment.inputColumns.includes(column.columnName)}">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Kolona</th>
+                            <th class="columnNames" *ngFor="let colInfo of dataset.columnInfo; let i = index" [ngClass]="{'header-disabled' : !columnsChecked[i]}">
+                                <div class="cell-align">
+                                    <div class="text-overflow">
+                                        #{{i + 1}}&nbsp;&nbsp;{{colInfo.columnName}}
+                                    </div>
+                                    <mat-checkbox color="primary" [(ngModel)]="columnsChecked[i]" (change)="changeInputColumns($event, colInfo.columnName)"></mat-checkbox>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of dataset.cMatrix; let i = index">
+                            <th [ngClass]="{'header-disabled col-disabled' : !columnsChecked[i]}">
+                                <div class="text-left text-overflow">
+                                    {{dataset.columnInfo[i].columnName}}
+                                </div>
+                            </th>
+                            <td *ngFor="let corrVal of row; let j = index" [ngClass]="{'text-disabled col-disabled' : !columnsChecked[j] || !columnsChecked[i]}">
+                                <div class="text-overflow">
+                                    {{corrVal}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div [ngClass]="{'hidden': tabToDisplay != Table.Columns}">
+                <table class="table text-offwhite fixed bg-blur">
+                    <colgroup>
+                        <col class="col-first">
+                        <col *ngFor="let column of dataset.columnInfo; let i = index" [ngClass]="{'col-disabled' : !experiment.inputColumns.includes(column.columnName)}">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th class="columnNames" *ngFor="let colInfo of dataset.columnInfo; let i = index" [ngClass]="{'header-disabled' : !columnsChecked[i]}">
+                                <div class="cell-align">
+                                    <div class="text-overflow">
+                                        #{{i + 1}}&nbsp;&nbsp;{{colInfo.columnName}}
+                                    </div>
+                                    <mat-checkbox color="primary" [(ngModel)]="columnsChecked[i]" (change)="changeInputColumns($event, colInfo.columnName)"></mat-checkbox>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Tip</th>
+                            <td *ngFor="let colInfo of dataset.columnInfo; let i = index" class="pad-fix" [ngClass]="{'text-disabled' : !columnsChecked[i]}">
+                                <p class="verticalAlign text-left" style="font-size:13px;" *ngIf="!colInfo.isNumber">Kategorijski</p>
+                                <mat-form-field *ngIf="colInfo.isNumber">
+                                    <mat-select matNativeControl [(value)]="this.experiment.columnTypes[i]" [disabled]="!columnsChecked[i]" (selectionChange)="columnTypeChanged(colInfo.columnName, i);">
+                                        <mat-option [value]="ColumnType.categorical">Kategorijski</mat-option>
+                                        <mat-option [value]="ColumnType.numerical">Numerički</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr class="graphics-row">
+                            <th class="no-pad">Grafik</th>
+                            <td class="no-pad" *ngFor="let colInfo of dataset.columnInfo; let i = index" [ngClass]="{'graphic-class' : !columnsChecked[i]}">
+                                <app-box-plot *ngIf="this.experiment.columnTypes[i] == ColumnType.numerical" [width]="150" [height]="150" [mean]="colInfo.mean" [median]="colInfo.median" [min]="colInfo.min" [max]="colInfo.max" [q1]="colInfo.q1" [q3]="colInfo.q3"></app-box-plot>
+                                <app-pie-chart *ngIf="this.experiment.columnTypes[i] == ColumnType.categorical" [width]="150" [height]="150" [uniqueValues]="colInfo.uniqueValues" [uniqueValuesPercent]="colInfo.uniqueValuesPercent"></app-pie-chart>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="border-bottom">Statistika</th>
+                            <td *ngFor="let colInfo of dataset.columnInfo; let i = index" [ngClass]="{'text-disabled' : !columnsChecked[i]}" class="text-left">
+                                <span *ngIf="this.experiment.columnTypes[i] == ColumnType.numerical">
+                                Mean: {{colInfo.mean}}<br>
+                                Median: {{colInfo.median}}<br>
+                                Min: {{colInfo.min}}<br>
+                                Max: {{colInfo.max}}<br>
+                                Q1: {{colInfo.q1}}<br>
+                                Q3: {{colInfo.q3}}<br>
+                            </span>
+                                <div class="text-overflow" *ngIf="this.experiment.columnTypes[i] == ColumnType.categorical && colInfo.uniqueValuesPercent">
+                                    <span *ngFor="let uniqueValue of colInfo.uniqueValues | slice:0:6; let i = index">
+                                    ({{(colInfo.uniqueValuesPercent[i] * 100).toFixed(2)}}%) {{uniqueValue}}<br>
+                                </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="padding: 0;">
+                            <th style="background-color:  var(--ns-primary);" (click)="openEncodingDialog()">
+                                <span class="verticalAlign">Enkodiranje</span>&nbsp;
+                                <span class="material-icons-round verticalAlign rotate">settings</span>
+                            </th>
+                            <td *ngFor="let colInfo of dataset.columnInfo; let i = index" class="pad-fix" [ngClass]="{'text-disabled' : !columnsChecked[i]}">
+                                <mat-form-field>
+                                    <mat-select matNativeControl [(value)]="experiment.encodings[i].encoding" [disabled]="!columnsChecked[i] || experiment.columnTypes[i] == ColumnType.numerical || colInfo.columnName == experiment.outputColumn" (selectionChange)="columnTableChangeDetected()">
+                                        <mat-option [value]="Encoding.Label" *ngIf="experiment.columnTypes[i] == ColumnType.numerical || colInfo.columnName == experiment.outputColumn" [selected]="experiment.columnTypes[i] == ColumnType.numerical || colInfo.columnName == experiment.outputColumn">
+                                            Nema enkodiranja
+                                        </mat-option>
+                                        <mat-option *ngFor="let option of Object.keys(Encoding); let optionName of Object.values(Encoding)" [value]="option">
+                                            {{ optionName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="brighter cell-align" (click)="openMissingValuesDialog()">
+                                <div id="missingValuesHeader">Nedostajuće<br>vrednosti<br></div>
+                                <span class="material-icons-round rotate">settings</span>
+                            </th>
+                            <td *ngFor="let colInfo of dataset.columnInfo; let i = index" [ngClass]="{'text-disabled' : !columnsChecked[i]}">
+
+                                <div *ngIf="colInfo.numNulls > 0">
+                                    <button class="w-100" mat-raised-button [ngClass]="{ 'menu-disabled' : !columnsChecked[i]}" [matMenuTriggerFor]="menu" id="main_{{colInfo.columnName}}" #nullValMenu>
+                                        <div class="cell-align">
+                                            <div [ngClass]="{'text-overflow' : experiment.nullValuesReplacers[i].option == NullValueOptions.Replace}">
+                                                {{nullValOption[i]}}
+                                            </div>
+                                            <mat-icon>arrow_drop_down</mat-icon>
+                                        </div>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <!--<button mat-menu-item (click)="MissValsDeleteClicked($event, NullValueOptions.DeleteColumns, i)" value={{colInfo.columnName}}>Obriši kolonu</button>-->
+                                        <button mat-menu-item (click)="MissValsDeleteClicked($event, NullValueOptions.DeleteRows, i)" value={{colInfo.columnName}}>Obriši redove ({{colInfo.numNulls}})</button>
+                                        <button mat-menu-item [matMenuTriggerFor]="fillWith">Popuni sa</button>
+                                    </mat-menu>
+
+                                    <mat-menu #fillWith="matMenu">
+                                        <button *ngIf="experiment.columnTypes[i] == ColumnType.numerical" mat-menu-item (click)="MissValsReplaceClicked($event, colInfo.columnName, i)" value={{colInfo.mean}}>Mean ({{colInfo.mean}})</button>
+                                        <button *ngIf="experiment.columnTypes[i] == ColumnType.numerical" mat-menu-item (click)="MissValsReplaceClicked($event, colInfo.columnName, i)" value={{colInfo.median}}>Median ({{colInfo.median}})</button>
+                                        <button *ngIf="experiment.columnTypes[i] == ColumnType.numerical" mat-menu-item (click)="MissValsReplaceClicked($event, colInfo.columnName, i)" value={{colInfo.max}}>Max ({{colInfo.max}})</button>
+                                        <button *ngIf="experiment.columnTypes[i] == ColumnType.numerical" mat-menu-item (click)="MissValsReplaceClicked($event, colInfo.columnName, i)" value={{colInfo.min}}>Min ({{colInfo.min}})</button>
+
+                                        <button *ngIf="experiment.columnTypes[i] == ColumnType.categorical" mat-menu-item [matMenuTriggerFor]="uniques">Najčešće vrednosti</button>
+
+                                        <button mat-menu-item [matMenuTriggerFor]="replaceWith">Unesi vrednost...</button>
+                                    </mat-menu>
+
+                                    <mat-menu #uniques="matMenu">
+                                        <button mat-menu-item *ngFor="let uniqueValue of colInfo.uniqueValues" (click)="MissValsReplaceClicked($event, colInfo.columnName, i)" value={{uniqueValue}}>{{uniqueValue}}</button>
+                                    </mat-menu>
+
+                                    <mat-menu #replaceWith="matMenu">
+                                        <input *ngIf="experiment.columnTypes[i] == ColumnType.categorical" type="text" id={{colInfo.columnName}} mat-menu-item placeholder="Unesi vrednost..." [value] #enterAValue>
+                                        <input *ngIf="experiment.columnTypes[i] == ColumnType.numerical" type="number" id={{colInfo.columnName}} mat-menu-item placeholder="Unesi vrednost..." [value] #enterAValue>
+                                        <button [disabled]="getValue(colInfo.columnName) == ''" mat-menu-item value={{getValue(colInfo.columnName)}} (click)="MissValsReplaceClicked($event, colInfo.columnName, i)">Potvrdi unos</button>
+                                    </mat-menu>
+                                </div>
+                                <div *ngIf="colInfo.numNulls == 0" class="text-left">
+                                    Nema nedostajućih vrednosti.
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="dataset && experiment" class="container-fluid text-offwhite belowColumn mt-3">
+        <div class="ns-row">
+            <div class="break-2"></div>
+
+            <div class="ns-col rounded">
+                <mat-form-field appearance="fill" class="align-items-center justify-content-center pt-3 w-100">
+                    <mat-label>Izlazna kolona</mat-label>
+                    <mat-select [(value)]="experiment.outputColumn" (selectionChange)="outputColumnChanged()">
+                        <mat-option *ngFor="let inputColumn of experiment.inputColumns" [value]="inputColumn">{{inputColumn}}</mat-option>
+                        <mat-option *ngIf="experiment.inputColumns.length == 0" value="-">-</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="ns-col rounded">
+                <mat-form-field appearance="fill" class="align-items-center justify-content-center pt-3 w-100">
+                    <mat-label>Tip problema</mat-label>
+                    <mat-select [(value)]="experiment.type">
+                        <mat-option [value]="ProblemType.Regression">Regresioni</mat-option>
+                        <mat-option [value]="ProblemType.BinaryClassification">Binarni-klasifikacioni</mat-option>
+                        <mat-option [value]="ProblemType.MultiClassification">Multi-klasifikacioni</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="break-1"></div>
+            <div class="ns-col d-flex align-items-center justify-content-center">
+                <button *ngIf="experiment._id == ''" mat-button (click)="saveExperiment()" class="bottom-button text-offwhite rounded-bottom">
+                    <div class="f-row" style="justify-content: space-around; width: 100%;">
+                        <div>Sačuvaj</div>
+                        <div class="icon-double pt-1">
+                            <mat-icon>check</mat-icon>
+                            <mat-icon>check</mat-icon>
+                        </div>
+                    </div>
+                </button>
+                <button *ngIf="experiment._id != ''" mat-button (click)="updateExperiment()" class="bottom-button text-offwhite rounded-bottom">
+                    <div class="f-row" style="justify-content: space-around; width: 100%;">
+                        <div>Sačuvaj izmene</div>
+                        <div class="icon-double pt-1">
+                            <mat-icon>check</mat-icon>
+                            <mat-icon>check</mat-icon>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

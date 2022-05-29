@@ -1,0 +1,77 @@
+ul {
+    list-style: none;
+}
+
+.holder {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.sidenav {
+    width: 250px;
+    background-color: var(--ns-bg-dark-50);
+}
+
+@media only screen and (max-width: 400px) {
+    .sidenav {
+        width: 100%;
+        background-color: var(--ns-bg-dark-100);
+    }
+    .holder {
+        flex-direction: column;
+    }
+}
+
+mat-stepper {
+    background-color: transparent;
+}
+
+.label {
+    color: white;
+}
+
+.steps-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.step-content {
+    position: relative;
+    width: 98%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*margin-bottom: 100px;*/
+}
+
+.step-content-inside {
+    width: 98%;
+    height: 98%;
+}
+
+.ekspName {
+    font-weight: bold;
+    font-size: large;
+}
+
+.addedElement {
+    color: var(--ns-accent);
+}
+
+.text-overflow {
+    overflow-wrap: break-word;
+    width: 170px;
+    display: inline-block;
+    text-align: left;
+}
+
+.text-overflow-experiment-name {
+    overflow-wrap: break-word;
+}

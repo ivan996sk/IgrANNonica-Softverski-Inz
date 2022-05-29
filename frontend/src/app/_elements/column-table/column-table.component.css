@@ -1,0 +1,266 @@
+table.fixed {
+    table-layout: fixed;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+#divTable {
+    height: 100%;
+    overflow-y: auto;
+}
+
+table.fixed td {
+    /* overflow: hidden; */
+    max-width: 200px;
+    min-width: 200px;
+    vertical-align: middle;
+    margin: 4px;
+}
+
+table.fixed th {
+    /* overflow: hidden; */
+    max-width: 250px;
+    min-width: 120px;
+    vertical-align: middle;
+    background-color: var(--ns-primary-50);
+    font-size: 14px;
+}
+
+table.fixed th:first-child {
+    text-align: center;
+}
+
+.columnNames {
+    background-color: var(--ns-primary-50) !important;
+}
+
+.brighter {
+    background-color: var(--ns-primary) !important;
+    border-color: var(--offwhite);
+}
+
+.border-bottom {
+    border-bottom-color: var(--offwhite) !important;
+}
+
+mat-slider {
+    width: 300px;
+}
+
+.slider {
+    background-color: var(--ns-bg-dark-100);
+}
+
+#missingValuesHeader {
+    font-size: 13px;
+    line-height: 140% !important;
+}
+
+.verticalAlign {
+    vertical-align: center;
+}
+
+.cell-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+table ::ng-deep .mat-form-field-wrapper {
+    margin-top: -2rem;
+}
+
+.graphics-row {
+    height: 100px;
+    padding: 1px;
+    margin: 0;
+}
+
+.no-pad {
+    padding: 2px;
+    margin: 0;
+}
+
+.text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.row-height {
+    height: 30px;
+    border: none;
+    outline: none;
+}
+
+.graphic-class {
+    opacity: 0.5;
+}
+
+
+/* TABS STYLE */
+
+#folder-table {
+    border: 1px solid var(--ns-primary);
+    border-radius: 4px;
+    height: 70%;
+}
+
+#tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    height: 3.2rem;
+}
+
+#tabs>.folder-tab:not(:first-child) {
+    margin-left: -5px;
+}
+
+.folder-tab-end {
+    margin-left: auto;
+    color: var(--offwhite) !important;
+    overflow: hidden;
+}
+
+.folder-tab,
+.folder-tab-end {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+    height: 2.5rem;
+    background-color: var(--ns-bg-dark-100);
+    border-color: var(--ns-primary);
+    color: var(--ns-primary);
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+}
+
+.folder-tab:not(:first-child) {
+    margin-block-start: auto;
+}
+
+.folder-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.selected-tab {
+    height: 3rem;
+    background-color: var(--ns-primary);
+    color: var(--offwhite);
+}
+
+.hover-tab {
+    height: 3.2rem;
+}
+
+.selected-tab,
+.hover-tab {
+    width: fit-content !important;
+}
+
+.tab-link {
+    color: var(--offwhite) !important;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.tab-link:active {
+    text-decoration: underline !important;
+}
+
+.selected-tab {
+    background-color: var(--ns-primary);
+}
+
+.hidden {
+    /*visibility: hidden;
+    height: 1px;*/
+    display: none;
+}
+
+.bottom-button {
+    font-size: large;
+    position: relative;
+    background-color: var(--ns-primary);
+    width: 13rem;
+    height: 2.3rem;
+    border-color: var(--ns-primary);
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+}
+
+#footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.pad-fix {
+    padding-top: 0.6rem;
+    padding-bottom: 0;
+}
+
+.long {
+    height: 3rem;
+}
+
+.col-disabled {
+    background-color: rgb(0, 45, 69);
+}
+
+.text-disabled {
+    color: gray;
+}
+
+.header-disabled {
+    color: gray;
+}
+
+.menu-disabled {
+    pointer-events: none;
+    opacity: .5;
+}
+
+col:not(.col-disabled) {
+    background-color: var(--ns-bg-dark-100);
+}
+
+.col-first {
+    background-color: rgb(1, 56, 86) !important;
+}
+
+
+/* mat-icon rotate */
+
+.rotate {
+    animation: rotation 3s infinite linear;
+}
+
+.rotate:hover {
+    cursor: pointer;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

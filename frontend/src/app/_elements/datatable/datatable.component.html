@@ -1,0 +1,37 @@
+<div *ngIf="tableData.hasInput" class="position-relative">
+    <div class="text-white">
+        <div *ngIf="!tableData.loaded" style="width: 100%; height: 100%;" class="d-flex justify-content-center align-items-center">
+            <app-loading></app-loading>
+        </div>
+        <div *ngIf="tableData.loaded && tableData.data">
+            <div style="border-radius: 5px; overflow-x: auto; overflow-y: hidden;">
+                <table *ngIf="tableData.data.length && tableData.data[0].length > 0" class="table table-responsive table-sm text-offwhite row-height">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let item of tableData.data[0]; let i = index">{{item}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of tableData.data | slice:1">
+                            <td *ngFor="let col of row">{{col}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" >
+                <div id="info" *ngIf="tableData.data.length > 0 && tableData.data[0].length > 0" class="d-flex flex-row justify-content-right align-items-right col-sm">
+                    <div class=" mb-3">
+                        Tabela {{tableData.numCols}} x {{tableData.numRows}}
+                    </div>
+                </div>
+                <div class="col-sm"></div>
+                <div class="col-sm"></div>
+                <div class="footer-center col-sm">Prikazano 10/{{tableData.numRows}} redova</div>
+                <div class="col-sm"></div>
+                <div class="col-sm"></div>
+                <div class="col-sm"></div>
+                
+            </div>
+        </div>
+    </div>
+</div>

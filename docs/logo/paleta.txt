@@ -1,0 +1,5 @@
+#ffffff - light
+#00171f - dark
+#003459 - background
+#007ea7 - secondary
+#00a8e8 - primary

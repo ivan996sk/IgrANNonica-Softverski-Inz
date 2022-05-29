@@ -1,0 +1,24 @@
+.shadowed:hover {
+    box-shadow: rgba(0, 152, 189, 0.4) 0px 5px, rgba(0, 152, 189, 0.3) 0px 10px, rgba(0, 152, 189, 0.2) 0px 15px, rgba(0, 152, 189, 0.1) 0px 20px, rgba(0, 152, 189, 0.05) 0px 25px;
+}
+
+.shadowed:first-child:hover {
+    box-shadow: rgba(0, 152, 189, 0.4) -5px 5px, rgba(0, 152, 189, 0.3) -10px 10px, rgba(0, 152, 189, 0.2) -15px 15px, rgba(0, 152, 189, 0.1) -20px 20px, rgba(0, 152, 189, 0.05) -25px 25px;
+}
+
+.shadowed:last-child:hover {
+    box-shadow: rgba(0, 152, 189, 0.4) 5px 5px, rgba(0, 152, 189, 0.3) 10px 10px, rgba(0, 152, 189, 0.2) 15px 15px, rgba(0, 152, 189, 0.1) 20px 20px, rgba(0, 152, 189, 0.05) 25px 25px;
+}
+
+.shadow-accent:hover {
+    box-shadow: rgba(0, 152, 189, 0.4) 0px 5px, rgba(0, 152, 189, 0.3) 0px 10px, rgba(0, 152, 189, 0.2) 0px 15px, rgba(0, 152, 189, 0.1) 0px 20px, rgba(0, 152, 189, 0.05) 0px 25px;
+    animation-name: holo-hover;
+    animation-duration: 300ms;
+    transform: perspective(100em) rotateX(10deg);
+}
+
+@keyframes holo-hover {
+    to {
+        transform: perspective(100em) rotateX(10deg);
+    }
+}

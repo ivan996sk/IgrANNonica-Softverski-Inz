@@ -1,0 +1,243 @@
+#folder {
+    width: 100%;
+}
+
+#tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    height: 3.1rem;
+}
+
+#tabs>.folder-tab:not(:first-child) {
+    margin-left: -5px;
+}
+
+.folder-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 2.5rem;
+    background-color: var(--ns-bg-dark-100);
+    border-color: var(--ns-primary);
+    color: var(--ns-primary);
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+}
+
+.folder-tab:not(:first-child) {
+    margin-block-start: auto;
+}
+
+.selected-tab {
+    height: 3rem;
+    background-color: var(--ns-primary);
+    color: var(--offwhite);
+}
+
+.hover-tab {
+    height: 3.2rem;
+}
+
+.selected-tab,
+.hover-tab {
+    width: fit-content !important;
+}
+
+.tab-link {
+    color: var(--offwhite) !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.tab-link:active {
+    text-decoration: underline !important;
+}
+
+.selected-tab {
+    background-color: var(--ns-primary);
+}
+
+#searchbar {
+    height: 2.5rem;
+    background-color: var(--ns-bg-dark-100);
+    border-bottom: 1px solid var(--ns-primary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.collapse-horizontal {
+    white-space: nowrap;
+    height: 2.5rem;
+    overflow-x: hidden;
+}
+
+#search-options {
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
+#selected-content {
+    background-color: var(--ns-bg-dark-50);
+    width: 100%;
+    /*backdrop-filter: blur(2px);*/
+    border-color: var(--ns-primary);
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-top-right-radius: 4px;
+}
+
+#footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bottom-button {
+    font-size: large;
+    position: relative;
+    text-align: center;
+    background-color: var(--ns-primary);
+    width: 12rem;
+    height: 2.3rem;
+    border-color: var(--ns-primary);
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+}
+
+.rounded-bottom {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.separator {
+    border-left-color: var(--ns-primary);
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+.list-view {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-item {
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ns-primary);
+    flex-shrink: 0;
+}
+
+.list-item:hover {
+    background-color: var(--ns-bg-dark-100);
+    box-shadow: 0px 3px 3px var(--ns-primary);
+}
+
+.list-item:hover>.hover-hide {
+    display: none;
+}
+
+.hover-show {
+    display: none;
+}
+
+.list-item:hover>.hover-show {
+    display: initial;
+}
+
+.list-add {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    height: 100%;
+    padding: 50px;
+}
+
+.folder-inside {
+    width: 100%;
+    min-height: 33rem;
+    height: 100%;
+    max-height: 100%;
+}
+
+.file-content {
+    width: 100%;
+    height: 95%;
+    position: relative;
+}
+
+.file-bottom-buttons {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    height: 0;
+
+}
+
+
+.file-bottom-buttons-helper {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    height: 45px;
+}
+
+.file-button {
+    position: relative;
+    color: var(--offwhite);
+    border-radius: 4px;
+    border: 1px solid var(--ns-primary);
+    background-color: var(--ns-bg-dark-50);
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-button:hover {
+    background-color: var(--ns-primary);
+}
+
+.form-hidden {
+    display: none;
+}
+
+.predictor {
+    text-decoration: underline;
+}
+
+.highlight-exp {
+    /*font-size: 16px;*/
+    font-weight: 700;
+}
+
+.text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.selected-file-tab {
+    max-width: 230px !important;
+}

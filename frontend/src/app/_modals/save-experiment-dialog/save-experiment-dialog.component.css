@@ -1,0 +1,13 @@
+#btnYes {
+    background-color: var(--offwhite);
+    color: var(--ns-bg-dark-100);
+}
+
+#btnNo {
+    color: gray;
+}
+
+.wrongInput {
+    color: var(--ns-warn);
+    font-size: 11px;
+}

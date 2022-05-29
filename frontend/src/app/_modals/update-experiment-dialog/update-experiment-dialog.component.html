@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="text-center">Sačuvaj izmene</h1>
+<div mat-dialog-content class="mt-5 mb-3 mx-1">
+    <form (keydown)="saveWithEnterKey($event)">
+        <mat-radio-group [(ngModel)]="selectedOption" [ngModelOptions]="{standalone: true}">
+            <!-- I   Update the existing experiment -->
+            <mat-radio-button [value]="1" checked>Izmeni postojeći eksperiment</mat-radio-button>
+            <!-- II  Save as new experiment -->
+            <mat-radio-button [value]="2" class="mt-4">Sačuvaj kao novi eksperiment</mat-radio-button>
+        </mat-radio-group>
+        <div class="d-flex align-items-center justify-content-center mt-3" [ngClass]="{'hidden-class': selectedName.length == 0 && selectedOption == 1}">
+            <mat-form-field [style.width.px]=200>
+                <input type="text" matInput [(ngModel)]="selectedName" (click)="selectedOption = 2" (keydown)="selectedOption = 2" cdkFocusInitial [ngModelOptions]="{standalone: true}" placeholder="Naziv novog eskperimenta">
+            </mat-form-field>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-1 mx-4">
+            <p *ngIf="wrongAlreadyExists" class="wrongInput">Eskperiment sa unetim nazivom već postoji u kolekciji.<br>Izaberite drugi naziv.</p>
+            <p *ngIf="wrongEmptyName" class="wrongInput">Unesite naziv eksperimenta.</p>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button id="btnYes" mat-stroked-button color="basic" (click)="onYesClick()">Sačuvaj</button>
+    <button id="btnNo" mat-stroked-button (click)="onNoClick()">Odustani</button>
+</div>

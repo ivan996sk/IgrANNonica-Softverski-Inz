@@ -1,0 +1,8 @@
+<div #graphWrapper class="position-relative" style="height: 14rem; width: 100%;">
+    <!-- <ng-container *ngFor="let layer of layers; let i = index">
+        <div [ngClass]="{'inputs': i==0}" class="node-text" *ngFor="let node of layer; let j = index" [style.left.%]="node.x * 99.4" [style.top.%]="node.y * 100">
+            {{ i == 0 ? (inputColumns && inputColumns.length >= j ? inputColumns[j] : 'nepoznato') : (i > 0 && i
+            < layers.length - 1 ? model!.layers[i-1].activationFunction : (i==layers.length - 1 ? 'out' : '')) }} </div>
+    </ng-container> -->
+    <canvas #graphCanvas></canvas>
+</div>

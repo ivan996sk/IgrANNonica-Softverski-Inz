@@ -1,0 +1,8 @@
+#btnYes {
+    background-color: var(--offwhite);
+    color: var(--ns-bg-dark-100);
+}
+
+#btnNo {
+    color: gray;
+}

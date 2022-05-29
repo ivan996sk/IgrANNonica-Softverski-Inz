@@ -1,0 +1,89 @@
+<!-- Modal -->
+<div class="modal fade" id="modalForRegister" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-alt text-offwhite">
+            <button #closeButton type="button" class="close-button btn-clear" data-bs-dismiss="modal" aria-label="Close" (click)="resetData()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <h1 class="mt-5 mb-4">Registracija</h1>
+            <form class="mx-4" (keydown)="doRegisterWithEnterKey($event)">
+                <!--Ime-->
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ime</mat-label>
+                        <input type="text" matInput [(ngModel)]="firstName" name="firstName" id="firstName">
+                        <mat-icon matSuffix></mat-icon>
+                    </mat-form-field>
+                    <p *ngIf="wrongFirstNameBool" class="wrong-creds">Unesite ispravno ime.</p>
+                </div>
+                <!--Prezime-->
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Prezime</mat-label>
+                        <input type="text" matInput [(ngModel)]="lastName" name="lastName" id="lastName">
+                        <mat-icon matSuffix></mat-icon>
+                    </mat-form-field>
+                    <p *ngIf="wrongLastNameBool" class="wrong-creds">Unesite ispravno prezime.</p>
+                </div>
+                <!--Korisnicko ime-->
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Korisničko ime</mat-label>
+                        <input type="text" matInput [(ngModel)]="username" name="username-register" id="username-register">
+                        <mat-icon matSuffix></mat-icon>
+                    </mat-form-field>
+                    <p *ngIf="wrongUsernameBool" class="wrong-creds">Unesite ispravno korisničko ime.</p>
+                    <p *ngIf="usernameAlreadyExistsBool" class="wrong-creds">Uneto korisničko ime je zauzeto.</p>
+                </div>
+                <!--Email-->
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>E-mail adresa</mat-label>
+                        <input type="email" matInput [(ngModel)]="email" name="email" id="email">
+                        <mat-icon matSuffix></mat-icon>
+                    </mat-form-field>
+                    <p *ngIf="wrongEmailBool" class="wrong-creds">Unesite ispravno e-mail adresu.</p>
+                    <p *ngIf="emailAlreadyExistsBool" class="wrong-creds">Uneta e-mail adresa je zauzeta.</p>
+                </div>
+                <!-- Lozinka 1. -->
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Lozinka</mat-label>
+                        <input type="password" matInput [(ngModel)]="pass1" name="pass1" id="pass1" #password1>
+                        <ng-container matSuffix *ngIf="!password1Shown">
+                            <mat-icon (click)="togglePasswordShown(1)">visibility_off</mat-icon>
+                        </ng-container>
+                        <ng-container matSuffix *ngIf="password1Shown">
+                            <mat-icon (click)="togglePasswordShown(1)">visibility</mat-icon>
+                        </ng-container>
+                    </mat-form-field>
+                    <p *ngIf="wrongPass1Bool" class="wrong-creds">Lozinka se mora sastojati od najmanje 6 karaktera.</p>
+                </div>
+                <!-- Lozinka 2. -->
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Potvrdite lozinku</mat-label>
+                        <input type="password" matInput [(ngModel)]="pass2" name="pass2" id="pass2" #password2>
+                        <ng-container matSuffix *ngIf="!password2Shown">
+                            <mat-icon (click)="togglePasswordShown(2)">visibility_off</mat-icon>
+                        </ng-container>
+                        <ng-container matSuffix *ngIf="password2Shown">
+                            <mat-icon (click)="togglePasswordShown(2)">visibility</mat-icon>
+                        </ng-container>
+                    </mat-form-field>
+                    <p *ngIf="wrongPass2Bool" class="wrong-creds">Lozinke se ne podudaraju.</p>
+                </div>
+            </form>
+            <div class="d-flex justify-content-center mt-2">
+                <button mat-raised-button id="registerButton" (click)="doRegister()">Registrujte se</button>
+                <button mat-stroked-button id="doNotRegisterButton" data-bs-dismiss="modal" (click)="resetData()">Odustanite</button>
+            </div>
+            <br>
+            <div class="modal-footer justify-content-center mt-3">
+                <p class="small">Imate kreiran nalog?
+                    <a data-bs-toggle="modal" data-bs-target="#modalForLogin"><span id="link" (click)="cleanWarnings()">Prijavite se</span></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

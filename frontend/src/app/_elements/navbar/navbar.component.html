@@ -1,0 +1,41 @@
+<header class="text-offwhite" style="background-color: #002b49;">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a routerLink="" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <img src="../../../assets/images/logo.png" class="bi me-2" width="64" height="64">
+                <h4>Igr<span class="highlight">ann</span>onica</h4>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a routerLink="experiment" class="nav-link px-2" [class]="(currentUrl === '/experiment') ? 'text-primary' : 'text-offwhite'">Napravi eksperiment</a>
+                </li>
+                <li><a routerLink="archive" class="nav-link px-2" [class]="(currentUrl === '/archive') ? 'text-primary' : 'text-offwhite'">Kolekcije</a>
+                </li>
+            </ul>
+
+            <div *ngIf="shared.loggedIn" class="dropdown text-end">
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img [src]="'/assets/profilePictures/'+ shared.photoId +'.png'" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small ns-bg-dark-100" aria-labelledby="dropdownUser1" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);" data-popper-placement="bottom-end">
+                    <li><a class="dropdown-item" routerLink="profile">Moj profil</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" routerLink="" (click)="logOut()">Odjavi se</a></li>
+                </ul>
+            </div>
+            <div *ngIf="!shared.loggedIn" class="dropdown text-end">
+                <button type="button" mat-raised-button color="accent" class="mx-2" data-bs-toggle="modal" data-bs-target="#modalForLogin">
+                    Prijavi se
+                </button>
+                <button type="button" mat-raised-button color="accent" data-bs-toggle="modal" data-bs-target="#modalForRegister">
+                    Registruj se
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<app-login-modal></app-login-modal>
+<app-register-modal></app-register-modal>

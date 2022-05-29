@@ -1,0 +1,174 @@
+<div id="folder">
+    <div id="tabs">
+        <div id="new-file-tab" *ngIf="newFile" class="folder-tab p-1 rounded-top" [style]="'z-index:' + (selectedTab == TabType.NewFile ? 11 : 10) + ' ;'" [ngClass]="{'selected-tab' : selectedTab == TabType.NewFile, 'hover-tab' : hoverTab == TabType.NewFile}">
+            <mat-icon class="text-offwhite">add</mat-icon>
+            <a class="stretched-link tab-link" (click)="selectTab(TabType.NewFile)" (mouseenter)="hoverOverTab(TabType.NewFile)" (mouseleave)="hoverOverTab(TabType.None)">
+                {{newTabTitles[type]}}
+            </a>
+        </div>
+        <!--<div class="folder-tab p-1 rounded-top" *ngFor="let file of filteredFiles; let i = index" [style]="'z-index:' + calcZIndex(i) + ' ;'" [ngClass]="{'selected-tab' : selectedFileIndex == i, 'hover-tab' : hoveringOverFileIndex == i}">
+            <a class="m-1 stretched-link tab-link" (click)="selectFile(i)" (mouseenter)="hoverOverFile(i)" (mouseleave)="hoverOverFile(-1)">{{file.name}}</a>
+        </div>-->
+        <div class="folder-tab p-1 rounded-top" *ngFor="let tab of tabsToShow; let i = index" [style]="'z-index:' + (selectedTab == tab ? 11 : (tabsToShow.length - i)) + ' ;'" [ngClass]="{'selected-tab' : selectedTab == tab, 'hover-tab' : hoverTab == tab}">
+            <a class="m-1 stretched-link tab-link" (click)="selectTab(tab)" (mouseenter)="hoverOverTab(tab)" (mouseleave)="hoverOverTab(TabType.None)">{{tabTitles[tab]}}</a>
+        </div>
+
+        <div class="folder-tab p-1 rounded-top selected-file-tab" *ngIf="selectedFile" [style]="'z-index:' + (selectedTab == TabType.File ? 11 : (tabsToShow.length)) + ' ;'" [ngClass]="{'selected-tab' : selectedTab == TabType.File, 'hover-tab' : hoverTab == TabType.File}">
+            <a class="m-1 stretched-link tab-link text-overflow" (click)="selectTab(TabType.File)" (mouseenter)="hoverOverTab(TabType.File)" (mouseleave)="hoverOverTab(TabType.None)">{{selectedFile.name}}</a>
+        </div>
+    </div>
+    <div id="selected-content" class="rounded-bottom text-offwhite">
+        <div id="searchbar" *ngIf="listView">
+            <!-- <div id="path" class="ps-2">{{folderName}}
+            </div>
+            <mat-icon>keyboard_arrow_right</mat-icon> -->
+            <div id="search" class="text-offwhite mx-1">
+                <mat-form-field>
+                    <button matPrefix class="btn-clear input-icon"><mat-icon>search</mat-icon></button>
+                    <input type="search" matInput name="search" [(ngModel)]="searchTerm" (input)="searchTermsChanged()">
+                    <button matSuffix class="btn-clear input-icon" (click)="clearSearchTerm()"><mat-icon>clear</mat-icon></button>
+                </mat-form-field>
+            </div>
+            <div id="modelFilter" *ngIf="type == FolderType.Model && forExperiment">
+                Filter: {{forExperiment.type}}
+            </div>
+            <!--<div id="search-options">
+                <div id="collapseFilters" class="collapse collapse-horizontal">
+                    <mat-icon class="text-offwhite ">timeline</mat-icon>
+                    Regresioni
+                    <mat-icon class="text-offwhite ">looks_two</mat-icon>
+                    Binarni klasifikacioni
+                    <mat-icon class="text-offwhite ">auto_awesome_motion</mat-icon>
+                    Multiklasifikacioni
+                </div>
+                <button class="btn-clear icon-toggle" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+                    <mat-icon>filter_alt</mat-icon>
+                </button>
+                <div id="collapseSort" class="collapse collapse-horizontal">
+                    [sort options here TODO]
+                </div>
+                <button class="btn-clear icon-toggle" data-bs-toggle="collapse" data-bs-target="#collapseSort" aria-expanded="false" aria-controls="collapseSort">
+                    <mat-icon>sort</mat-icon>
+                </button>
+                <button class="btn-clear icon-toggle separator" [ngClass]="{'icon-toggle-on': listView}" (click)="toggleListView()">
+                    <mat-icon>view_list</mat-icon>
+                </button>
+            </div>-->
+        </div>
+        <!--{{fileToDisplay ? fileToDisplay.name : 'No file selected.'}} {{selectedFileIndex}} {{hoveringOverFileIndex}}-->
+        <div class="folder-inside bg-blur">
+            <div class="file-content" [ngClass]="{'form-hidden' : listView}">
+                <!-- New File -->
+                <app-form-model #newModel [ngClass]="{'form-hidden': type != FolderType.Model || !newFileSelected}" [forExperiment]="forExperiment" [hideProblemType]="(forExperiment ? true : false)" [forProblemType]="(forExperiment ? forExperiment.type : ProblemType.Regression)"></app-form-model>
+                <app-form-dataset #newDataset [ngClass]="{'form-hidden': type != FolderType.Dataset || !newFileSelected}" [forExperiment]="forExperiment"></app-form-dataset>
+                <!-- Selected File -->
+                <app-form-model #selectedModel [ngClass]="{'form-hidden': type != FolderType.Model  || newFileSelected}" [forExperiment]="forExperiment" [hideProblemType]="(forExperiment ? true : false)" [forProblemType]="(forExperiment ? forExperiment.type : ProblemType.Regression)"
+                    (editEvent)="onFileChange()"></app-form-model>
+                <app-form-dataset #selectedDataset [ngClass]="{'form-hidden': type != FolderType.Dataset  || newFileSelected}" [forExperiment]="forExperiment" (editEvent)="onFileChange()"></app-form-dataset>
+            </div>
+            <div [ngClass]="{'form-hidden' : !listView}" class="list-view">
+                <div *ngFor="let file of filteredFiles; let i = index">
+                    <div class="list-item force-link" (click)="selectFile(file)">
+                        <div class="mx-2" [ngClass]="{'highlight-exp' : selectedTab == TabType.MyExperiments}">
+                            {{file.name}}
+                        </div>
+                        <div class="mx-2 hover-hide">
+                            {{file.lastUpdated | date}}
+                        </div>
+                        <div class="mx-2 hover-show" *ngIf="selectedTab !== TabType.PublicDatasets && selectedTab !== TabType.PublicModels">
+                            <button *ngIf="selectedTab==TabType.MyDatasets" class="btn-clear file-button" (click)="downloadFile(file,$event)" style="display: inline-block;">
+                                <mat-icon matTooltip="Preuzmi" matTooltipPosition="above">download</mat-icon>
+                            </button>
+                            <button class="btn-clear file-button" (click)="deleteFile(file, $event)" style="display: inline-block;">
+                                <mat-icon matTooltip="Obriši" matTooltipPosition="above">delete</mat-icon>
+                            </button>
+                        </div>
+                        <div class="mx-2 hover-show" *ngIf="selectedTab == TabType.PublicDatasets || selectedTab == TabType.PublicModels">
+                            <button class="btn-clear file-button" (click)="addFile(file, $event)">
+                                <mat-icon matTooltip="Uvezi" matTooltipPosition="right">note_add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div *ngIf="type == FolderType.Experiment" class="list-view">
+                        <div *ngFor="let predictor of predictorsForExp[file._id];" class="list-item" (click)="goToExperimentPageWithPredictor(file, predictor)">
+
+                            <div class="mx-3">
+                                <div class="f-row">
+                                    <mat-icon>subdirectory_arrow_right</mat-icon>
+                                    <div class="mx-1">{{predictor.name}}</div>
+                                </div>
+                            </div>
+                            <div class="mx-2 hover-hide">
+                                {{predictor.dateCreated| date}}
+                            </div>
+                            <div class="mx-2 hover-show">
+                                <button class="btn-clear file-button" (click)="deleteFile(predictor, $event, true)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="list-add" [ngSwitch]="type" *ngIf="privacy != Privacy.Public">
+                    <!-- {{privacy == Privacy.Public ? 'javni ' : ' '}} -->
+                    <button mat-raised-button *ngSwitchCase="FolderType.Dataset" (click)="selectNewFile()">Dodaj izvor podataka</button>
+                    <button mat-raised-button *ngSwitchCase="FolderType.Model" (click)="selectNewFile()">Dodaj konfiguraciju neuronske mreže</button>
+                    <button mat-raised-button *ngSwitchCase="FolderType.Experiment" routerLink="/experiment">Dodaj eksperiment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [ngSwitch]="newFileSelected" *ngIf="!listView">
+        <div class="file-bottom-buttons" *ngIf="selectedTab != TabType.NewFile">
+            <div class="file-bottom-buttons-helper">
+                <button *ngIf="this.selectedFile && selectedTab == TabType.File && privacy != Privacy.Public" class="btn-clear file-button" (click)="deleteFile(this.selectedFile, $event)">
+                    <mat-icon matTooltip="Obriši" matTooltipPosition="above">delete</mat-icon>
+                </button>
+                <button *ngIf="this.selectedFile && selectedTab==TabType.File && FolderType.Dataset==this.type" class="btn-clear file-button" (click)="downloadFile(this.selectedFile,$event)" style="display: inline-block;">
+                    <mat-icon matTooltip="Preuzmi" matTooltipPosition="above">download</mat-icon>
+                </button>
+            </div>
+            <!-- <button class="btn-clear file-button">
+                <mat-icon>zoom_out_map</mat-icon>
+            </button> -->
+        </div>
+    </div>
+    <div id="footer" [ngSwitch]="newFileSelected" *ngIf="!listView">
+        <button mat-button (click)="saveNewFile()" class="bottom-button text-offwhite rounded-bottom" [disabled]="saveDisabled" *ngSwitchCase="true">
+            <div  class="f-row">
+                <div>Sačuvaj</div>
+                <div class="pt-1">
+                    <mat-icon>check</mat-icon>
+                </div>
+            </div>
+        </button>
+        <ng-container *ngSwitchCase="false">
+            <button mat-button (click)="ok()" class="bottom-button text-offwhite rounded-bottom" *ngIf="!selectedFileHasChanges && !archive">
+                <div class="f-row">
+                    <div>Ok</div>
+                    <div class="p-1 w-100" *ngIf="loadingAction">
+                        <app-spinner></app-spinner>
+                    </div>
+                    <div class="icon-double pt-1" *ngIf="!loadingAction">
+                        <mat-icon>check</mat-icon>
+                        <mat-icon>check</mat-icon>
+                    </div>
+                </div>
+            </button>
+            <button mat-button (click)="updateFile()" class="bottom-button text-offwhite rounded-bottom" *ngIf="selectedFileHasChanges" [disabled]="loadingAction">
+                <div class="f-row">
+                    <div *ngIf="!loadingAction">Sačuvaj izmene</div>
+                    <div class="pt-1" *ngIf="!loadingAction">
+                        <mat-icon>edit</mat-icon>
+                    </div>
+                    <div class="pt-1 w-100" *ngIf="loadingAction">
+                        <app-spinner></app-spinner>
+                    </div>
+                </div>
+            </button>
+        </ng-container>
+    </div>
+    
+
+</div>

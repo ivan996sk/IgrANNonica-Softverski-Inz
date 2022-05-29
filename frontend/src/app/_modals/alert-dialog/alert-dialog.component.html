@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<div mat-dialog-content class="mt-4 text-offwhite">
+    <form (keydown)="withEnterKey($event)">
+        {{data.message}}
+    </form>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-center mt-4">
+    <button mat-raised-button cdkFocusInitial (click)="onOkClick()" color="basic">OK</button>
+</div>

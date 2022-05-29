@@ -1,0 +1,4 @@
+{
+    "apiURL": "http://localhost:5283/api",
+    "apiWSUrl": "http://localhost:5283/chatHub"
+}

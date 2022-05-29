@@ -1,0 +1,19 @@
+<h2 mat-dialog-title class="text-center">Enkodiranje svih kolona</h2>
+<div mat-dialog-content class="mt-5 mb-4">
+    <p>Sve izabrane kolone biće enkodirane metodom:</p>
+    <div class="d-flex justify-content-center">
+        <form (keydown)="withEnterKey($event)">
+            <mat-form-field>
+                <mat-select matNativeControl [(value)]="selectedEncodingType" cdkFocusInitial>
+                    <mat-option *ngFor="let option of Object.keys(Encoding); let optionName of Object.values(Encoding)" [value]="option">
+                        {{ optionName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button id="btnYes" mat-stroked-button color="basic" (click)="onYesClick()">Potvrdi</button>
+    <button id="btnNo" mat-stroked-button (click)="onNoClick()">Odustani</button>
+</div>

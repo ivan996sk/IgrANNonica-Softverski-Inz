@@ -1,0 +1,69 @@
+/*Mora da se ispravi za media kada je ekran premali pa se poredjaju u kolonu*/
+
+html,
+body {
+    height: 100%;
+}
+
+.align-items-view>*:first-child {
+    transform: perspective(100em) rotateY(25deg) translateZ(1em);
+}
+
+.align-items-view>* {
+    transform: perspective(100em) translateZ(-2em);
+}
+
+.align-items-view>*:last-child {
+    transform: perspective(100em) rotateY(-25deg) translateZ(1em);
+}
+
+.ns-row {
+    width: 98%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.ns-col {
+    flex-grow: 1;
+    padding: 2px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 50%;
+}
+
+@media screen and (min-width: 1200px) {
+    .ns-col {
+        flex-basis: 25%;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .ns-col {
+        flex-basis: 12.5%;
+        width: 10%;
+    }
+}
+
+
+/*.break-1,
+.break-2 {
+    height: 1px;
+    width: 100%;
+}
+
+@media screen and (min-width: 1200px) {
+    .break-1 {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .break-2 {
+        display: none;
+    }
+}*/

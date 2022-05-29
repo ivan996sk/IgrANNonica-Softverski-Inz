@@ -1,0 +1,44 @@
+.modal-content {
+    text-align: center;
+    margin: auto;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+#registerButton {
+    color: white;
+    background-color: #003459;
+    margin-right: 10px;
+}
+
+#registerButton,
+#doNotRegisterButton {
+    padding: 2% 7%;
+}
+
+.close-button {
+    margin: 2%;
+}
+
+#link {
+    text-decoration: underline;
+}
+
+#link:hover {
+    color: var(--offwhite);
+    font-size: 110%;
+}
+
+.mat-form-field {
+    width: 80%;
+}
+
+.wrong-creds {
+    color: var(--ns-warn);
+}
+
+p {
+    font-size: 11px;
+}

@@ -1,0 +1,30 @@
+.logo {
+    margin: 0 !important;
+}
+
+#title {
+    color: var(--offwhite);
+}
+
+h1 {
+    font-size: 64px !important;
+    font-weight: 900 !important;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+    font-family: /*'Garamond',*/
+    'Courier New', Courier, monospace;
+}
+
+.card {
+    margin: 2.5rem !important;
+    padding: 1.5rem;
+    width: 26rem !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.subtitle-class {
+    letter-spacing: 0.2rem;
+}

@@ -1,0 +1,80 @@
+<div class="container-fluid p-0 text-offwhite holder" style="height: calc(100vh - 64px); text-align: center;">
+    <div class="d-flex flex-colum align-items-center sidenav">
+        <div>
+            <div class="ekspName " style="width: 250px;">
+                <div class="text-overflow-experiment-name" *ngIf="experiment.name=='exp1'" style="width: 250px;">
+                    Novi Eksperiment
+                </div>
+                <div class="text-overflow-experiment-name" *ngIf="experiment.name!='exp1'" style="width: 250px;">
+                    {{experiment.name}}
+                </div>
+
+            </div>
+            <mat-stepper orientation="vertical" (selectionChange)="changePage($event)" [linear]="true">
+                <mat-step [completed]="this.step1">
+                    <!--editable="false"-->
+                    <ng-template matStepLabel>
+                        <span class="label text-overflow" *ngIf="dataset==undefined">Izvor podataka </span>
+                        <span class="label addedElement text-overflow" *ngIf="dataset!=undefined">{{dataset.name}}</span>
+                    </ng-template>
+                    <ng-template matStepContent>
+                        <p class="text-left text-overflow">Izaberite izvor podataka</p>
+                    </ng-template>
+                </mat-step>
+                <mat-step [completed]="experiment._id!=''">
+                    <ng-template matStepLabel>
+                        <span class="label addedElement text-overflow" *ngIf="experiment._id!=''">Predvideti:{{experiment.outputColumn}}</span>
+                        <span *ngIf="!this.step1" class="align-middle"><mat-icon>lock</mat-icon></span>
+                        <span class="label text-overflow" *ngIf="experiment._id==''">Odabir kolona </span>
+                    </ng-template>
+                    <ng-template matStepContent>
+                        <p class="text-left text-overflow">Pripremite podatke i izaberite izlazne kolone</p>
+                    </ng-template>
+                </mat-step>
+                <mat-step [completed]="this.step3">
+                    <ng-template matStepLabel>
+                        <span *ngIf="experiment._id==''" class="align-middle"><mat-icon>lock</mat-icon></span>
+                        <span class="label addedElement text-overflow" *ngIf="modelToTrain!=undefined">{{modelToTrain.name}}</span>
+                        <span class="label text-overflow" *ngIf="modelToTrain==undefined">Treniranje</span>
+                    </ng-template>
+                    <p class="text-left text-overflow">Odaberite parametre i trenirajte model</p>
+                </mat-step>
+                <mat-step [completed]="this.step4">
+                    <ng-template matStepLabel>
+                        <span *ngIf="!this.step3" class="align-middle"><mat-icon>lock</mat-icon></span>
+                        <span class="label text-overflow align-middle">Pregled rezultata<br> treniranja</span>
+                    </ng-template>
+                    <p class="text-left text-overflow">Pregledajte tok treniranja i<br> grafički prikaz rezultata</p>
+                </mat-step>
+            </mat-stepper>
+        </div>
+    </div>
+    <div #stepsContainer class="steps-container">
+        <div #steps id="step_1" class="step-content">
+            <div class="step-content-inside">
+                <app-folder #folderDataset [type]="FolderType.Dataset" [forExperiment]="experiment" [startingTab]="TabType.NewFile" [tabsToShow]="[TabType.MyDatasets, TabType.PublicDatasets]" (okPressed)="goToPage(1)" (selectedFileChanged)="setDataset($event)"></app-folder>
+            </div>
+        </div>
+        <div #steps id="step_2" class="step-content" *ngIf="step1">
+            <div class="step-content-inside">
+                <app-column-table (okPressed)="goToPage(2); experiment._columnsSelected = true;" (columnTableChanged)="columnTableChangedEvent()" (experimentChanged)="experimentChangedEvent()" [experiment]="experiment" [dataset]="dataset"></app-column-table>
+            </div>
+        </div>
+        <div #steps id="step_3" class="step-content" *ngIf="step2">
+            <div class="step-content-inside">
+                <app-folder #folderModel [type]="FolderType.Model" [forExperiment]="experiment" [startingTab]="TabType.NewFile" [tabsToShow]="[TabType.MyModels]" (okPressed)="goToPage(3); trainModel();" (selectedFileChanged)="setModel($event)"></app-folder>
+            </div>
+        </div>
+        <div #steps id="step_4" class="step-content" *ngIf="step3">
+            <div class="step-content-inside">
+                <app-line-chart [experiment]="experiment"></app-line-chart>
+            </div>
+        </div>
+        <!--
+        <div #steps id="step_5" class="step-content" *ngIf="step4">
+            <div class="step-content-inside">
+                <app-form-predictor></app-form-predictor>
+            </div>
+        </div>-->
+    </div>
+</div>

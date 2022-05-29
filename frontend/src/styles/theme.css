@@ -1,0 +1,68 @@
+:root {
+    --ns-primary: #0063AB;
+    --ns-primary-25: rgba(0, 99, 171, 0.25);
+    --ns-primary-50: rgba(0, 99, 171, 0.5);
+    --ns-accent: #00a8e8;
+    --ns-bg: #003459;
+    --ns-bg-light-30: rgba(0, 152, 189, 0.3);
+    --ns-bg-dark-100: rgba(0, 65, 101, 1.0);
+    --ns-bg-dark-50: rgba(0, 65, 101, 0.5);
+    --offwhite: #dfd7d7;
+    --ns-warn: #f9b7b7;
+    --ns-alt: #002b49;
+}
+
+body {
+    /*background-image: url('/assets/images/add_model_background.jpg');*/
+    background-color: var(--ns-bg);
+}
+
+.bg-light {
+    background-color: var(--ns-bg-light-30) !important;
+}
+
+.bg-alt {
+    background-color: var(--ns-alt);
+}
+
+.ns-border-primary {
+    border: 1px solid var(--ns-primary);
+}
+
+.ns-bg-dark-50 {
+    background-color: var(--ns-bg-dark-50) !important;
+}
+
+.ns-bg-dark-100 {
+    background-color: var(--ns-bg-dark-100) !important;
+}
+
+a {
+    color: var(--ns-primary) !important;
+}
+
+.text-offwhite {
+    color: var(--offwhite) !important;
+}
+
+.highlight {
+    color: var(--ns-accent);
+}
+
+
+/* Ripple effect */
+
+.bubble {
+    background-position: center;
+    transition: background 0.2s;
+}
+
+.bubble:hover {
+    background: var(--ns-primary-50) radial-gradient(circle, transparent 1%, var(--ns-accent) 1%) center/15000%;
+}
+
+.bubble:active {
+    background-color: #6eb9f7;
+    background-size: 100%;
+    transition: background 0s;
+}
